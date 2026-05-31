@@ -1,0 +1,1031 @@
+Yo: Oye, necesito que me ayudes a planear algo para saber hasta qué punto se puede automatizar. um y es que puedes buscar por internet la página teilurtalent.com, la cual es nuestro proyecto. Entonces, para que tengas contexto de lo que hacemos. Entonces, hay una persona encargada de hacer un flujo que ya te voy a comentar y la idea es como tratar de automatizar ese flujo lo más posible. Entonces, ella usa normalmente en LinkedIn, normalmente usa como la búsqueda, um pone hiring o engineer para y ella empieza, ahí le salen, ella puede buscar por el filtro de publicaciones, a veces busca por ahí o a veces por perfiles. para buscar al ideal. Entonces ella mira en publicaciones si alguien necesita o mira en perfiles, pero también tiene que mirar bien que sirva, porque, por ejemplo, una persona que que coincida, pero aparte de lo que coincide, que está, qué es lo que Taylor Talent está buscando, aparte de eso, um la persona también hace lo mismo que nosotros, entonces no nos sirve. Entonces se analiza eso y se pierde mucho tiempo buscando y buscando perfiles en LinkedIn para escribirles. Ya ella, la persona que hace eso se llama Melanie. Entonces ya Melanie les manda un mensaje personalizado a cada persona, um dependiendo de la persona, el perfil, lo que se encontró sobre esa persona, porque se le hace como un estudio. y se le envía el mensaje ofreciéndole pues nuestro servicio. um También muchas veces encuentran como perfiles reclutadores y ellos normalmente no se fijan o no les interesa el servicio porque um se trata de llegar a una persona que tome las decisiones, que le interese lo que se ahorra con nosotros, todo eso. Entonces, a un reclutador, normalmente, no toma esas decisiones y no le interesa. Entonces, um es cierto perfil específico. Luego te puedo dar más detalles cuando entremos a construcción. El problema aquí es simplificar un poco más para para tener más claridad sobre qué puntos se pueden automatizar y luego entramos en más detalles con instrucciones, filtros de búsqueda y cosas así. Entonces, um ah bueno, y en LinkedIn se le envía una conexión primero para que la otra persona la acepte. Cuando la acepta, ahí sí se le envía el mensaje. um La otra manera, porque esa es una manera de buscar, digamos, clientes. La otra manera es con willfound.com. Aquí las estaras publican vacantes abiertas, entonces la persona, Melanie, entra a la página, luego entra a Jobs, um busca la vacante necesaria, um se mete pues al perfil de la empresa y um busca el link de la página de la empresa, que ellos normalmente pues la muestran ahí, luego acceden al link y usan una extensión de inteligencia artificial. llama a apolo.io. y la IA como que les da, les busca el contacto para como el mejor contacto para contactarlos. Les pasa un correo. Entonces muchas veces les recomienda el correo del CEO de esa empresa, pero pues es lo que la IA recomienda, digamos, para contactar. y de ahí, luego ellos con cloud, un program que tienen y eso, um le piden a esa IA de entropic para poder enviarles como organizar el correo personalizado y luego tienen un prom listo para personalizar el correo y luego ya le envían el correo. También pues hacen un mini estudio ahí de la página, de lo que tienen y todo eso con la misma IA. um el otro modelo es usando como tal Apolo para buscar quiénes están contratando el mismo filtro y con apollo conseguir el número y llamarlos con hotspot. Pues, no llamarlos directamente con hotspot, pero pues no sé ni para qué usan hotspot, se me olvidó preguntar, pero pues lo usan también. Igualmente, pues es muy demorado. Lo que hacen es buscar clientes. Entonces, necesito saber si tienes alguna duda antes de um antes de recomendarme algo o si o si todo claro y ya puedes entrar en detalle o qué. ¿Necesitas algún dato extra, um recomendarme o pues si está todo claro, entonces ya puedes entrar en en recomendación, qué herramientas podría usar, cómo sería el flujo, qué se pueda automatizar, qué no. Y todo eso. Porfa, investiga bien y dame una buena y excelente respuesta.
+
+chatGPT: Sí, está bastante claro. Voy a mirarlo como un flujo comercial de prospección: fuentes de leads, calificación, enriquecimiento, personalización, outreach y seguimiento; luego separo qué puede automatizarse, qué debería quedar humano y qué herramientas tienen sentido.
+
+Pensó durante 26s
+
+Sí, está claro y sí se puede automatizar bastante, pero con una regla importante: LinkedIn no debería automatizarse agresivamente porque LinkedIn prohíbe herramientas de terceros que scrapean, usan bots, extensiones o automatizan actividad dentro de la plataforma. Eso puede terminar en restricciones de cuenta.
+
+Lo que sí se puede hacer es automatizar la investigación, calificación, enriquecimiento, redacción y seguimiento, dejando la parte sensible de LinkedIn como revisión/envío humano.
+
+1. Lo que entendí del negocio de Teilur
+
+Teilur Talent vende nearshore staffing / recruiting para empresas de Estados Unidos y Canadá que quieren contratar talento tech remoto en LATAM. La web comunica “hire remote engineers, devs, and tech talent in Latin America”, con un enfoque de recruiting, payroll, compliance y pricing transparente.
+
+Entonces el lead ideal no es simplemente “alguien que está contratando”, sino alguien que:
+
+Tiene necesidad real de talento tech, probablemente está creciendo, está contratando engineers/devs/product/DevOps/cybersecurity/data, tiene capacidad de decisión o influencia, y no es una empresa que haga exactamente lo mismo que Teilur.
+
+2. El flujo actual, simplificado
+
+Hoy Melanie hace algo así:
+
+Fuente 1: LinkedIn
+
+Busca publicaciones o perfiles con señales como “hiring”, “engineer”, “remote”, “startup”, etc. Luego revisa manualmente si la persona sirve, si es decision maker, si no es recruiter interno sin poder de decisión, si la empresa no compite con Teilur, personaliza la invitación y espera aceptación para enviar mensaje.
+
+Fuente 2: Wellfound
+
+Busca startups con vacantes abiertas. Wellfound está enfocado en startups y empleos tech/startup, y muestra información de compañías y vacantes, lo cual lo vuelve una fuente útil para señales de contratación.
+Luego Melanie entra a la empresa, busca la web, usa Apollo para encontrar contactos, normalmente CEO/founder/Head of People/CTO, y después usa Claude para investigar y redactar el correo.
+
+Fuente 3: Apollo
+
+Busca empresas/personas con filtros, obtiene correos y teléfonos, y luego probablemente usan HubSpot para CRM, seguimiento o llamadas. Apollo se vende como una plataforma de prospecting, lead gen, enrichment y automatización de revenue, con integraciones como HubSpot y Salesforce.
+
+Recomendación principal
+
+Yo no intentaría automatizar “todo LinkedIn”. Armaría un sistema donde Melanie ya no tenga que buscar 100 perfiles manualmente, sino que reciba una lista diaria o semanal de leads ya filtrados, rankeados y con mensaje sugerido.
+
+La meta sería pasar de:
+
+“Melanie busca → analiza → investiga → redacta → contacta → registra”
+
+a:
+
+“Sistema encuentra → sistema califica → sistema investiga → sistema redacta → Melanie aprueba/contacta → CRM hace seguimiento”
+
+3. Qué se puede automatizar y qué no
+Parte del proceso	Nivel de automatización	Recomendación
+Buscar empresas con vacantes tech abiertas	Alto	Automatizar con Apollo, Wellfound, job boards, Google alerts o Clay
+Detectar si la empresa está contratando engineers	Alto	AI + filtros por job titles
+Detectar si la empresa es competidora	Medio/alto	AI classifier con reglas claras
+Encontrar decision makers	Alto	Apollo / Clay / HubSpot enrichment
+Encontrar email	Alto	Apollo, Hunter, Clay, Dropcontact, etc.
+Investigar empresa/persona	Alto	Claude/OpenAI con prompt fijo
+Redactar correo personalizado	Alto	Claude/OpenAI con plantilla
+Enviar cold email	Alto, con cuidado	Apollo, HubSpot Sequences, Instantly, Smartlead
+LinkedIn connection requests	Bajo/medio	Mejor semi-manual por riesgo de LinkedIn
+Mensaje LinkedIn después de aceptar	Semi-manual	AI redacta, humano envía
+Seguimiento y CRM	Alto	HubSpot, Apollo, Zapier/Make
+4. El flujo ideal que yo montaría
+Etapa 1: Crear un “Lead Scoring System”
+
+Antes de herramientas, hay que definir una matriz para que la IA sepa qué es buen lead y qué no.
+
+Score recomendado: 0 a 100
+
+A. Señal de hiring — 30 puntos
+
+Buen lead si tiene:
+
+Vacantes abiertas de software engineering.
+Vacantes de DevOps, cloud, data, cybersecurity, QA, product, design, AI.
+Publicaciones recientes tipo “we’re hiring”.
+Hiring en US/Canada pero roles que podrían ser remotos.
+
+B. Fit con Teilur — 25 puntos
+
+Buen lead si:
+
+Empresa de US o Canada.
+Startup, scaleup, SaaS, ecommerce, marketplace, healthtech, fintech, AI company.
+Tiene entre 10 y 500 empleados.
+Probablemente necesita reducir costo de contratación o acelerar hiring.
+No parece tener un equipo grande de recruiting interno.
+
+C. Persona correcta — 25 puntos
+
+Prioridad alta:
+
+Founder / CEO.
+COO.
+CTO.
+VP Engineering.
+Head of Talent.
+Head of People.
+Chief of Staff.
+VP Operations.
+Hiring Manager técnico.
+
+Prioridad baja:
+
+Recruiter junior.
+Talent Acquisition Specialist sin seniority.
+Sourcer.
+Agency recruiter.
+People intern.
+Otro proveedor de staffing/recruiting.
+
+D. No competidor — 20 puntos
+
+Descartar o bajar score si la empresa:
+
+Es staffing agency.
+Es recruiting agency.
+Es outsourcing company.
+Es nearshore/offshore development agency.
+Vende EOR/staff augmentation como core business.
+Hace “AI development agency” o “software outsourcing” y quiere partnership, no contratar talento.
+5. Flujo automatizado recomendado
+Paso 1: Fuentes de leads
+
+Yo usaría 3 fuentes principales:
+
+Fuente A: Apollo como base principal
+
+Apollo puede buscar empresas y contactos con filtros, enriquecer datos y conectarse con HubSpot. También tiene funciones de prospecting y email outreach.
+
+Filtros sugeridos:
+
+Location: United States, Canada.
+Company headcount: 11–500.
+Industry: Software, SaaS, AI, FinTech, HealthTech, E-commerce, Marketplace, Cybersecurity, Logistics, B2B Services.
+Keywords: hiring, software engineer, devops, full stack, backend, cloud, data engineer.
+Excluir: staffing, recruiting, outsourcing, offshore, nearshore, IT services agency, talent marketplace.
+
+Personas sugeridas:
+
+CEO.
+Founder.
+Co-Founder.
+CTO.
+VP Engineering.
+Head of People.
+Head of Talent.
+COO.
+Chief of Staff.
+Fuente B: Wellfound para señales de startups contratando
+
+Wellfound sirve porque muchas startups publican roles ahí, y eso ya es una señal fuerte de hiring.
+
+Flujo:
+
+Buscar vacantes tech abiertas.
+Extraer nombre de empresa.
+Ir a la web.
+Enriquecer en Apollo.
+Encontrar CEO/Founder/CTO/Head of People.
+Pasar por scoring.
+Crear mensaje personalizado.
+
+Esto se puede montar con Clay o con una combinación de Google Sheets + Apollo + Make/Zapier + Claude/OpenAI.
+
+Fuente C: LinkedIn, pero semi-manual
+
+LinkedIn debería quedar como fuente de señales y canal de contacto humano, no como scraping/automation masiva.
+
+LinkedIn oficialmente prohíbe software de terceros que scrapee, modifique la apariencia o automatice actividad en su sitio.
+Por eso, automatizar connection requests o mensajes con bots no lo recomendaría.
+
+Lo que sí haría:
+
+Melanie guarda perfiles o posts interesantes.
+Copia URL de LinkedIn en una Sheet o CRM.
+La IA analiza la persona/empresa.
+La IA dice: “verde / amarillo / rojo”.
+La IA genera el mensaje.
+Melanie decide si conecta y envía.
+6. El mejor stack de herramientas
+Opción simple y barata
+
+Para empezar sin construir algo complejo:
+
+Apollo + Google Sheets + Claude/OpenAI + HubSpot
+
+Flujo:
+
+Apollo genera lista de empresas/contactos.
+Export a Google Sheets.
+Claude/OpenAI analiza cada lead.
+Se genera:
+score,
+razón del fit,
+riesgo,
+mejor persona,
+email personalizado,
+LinkedIn message.
+HubSpot guarda leads y hace seguimiento.
+
+Esta opción es buena si quieren validar el proceso primero.
+
+Opción más potente
+
+Clay + Apollo + HubSpot + Claude/OpenAI
+
+Clay puede actuar como el “cerebro operacional” porque conecta fuentes de datos, enrichment y AI research agents. Clay comunica acceso a muchas fuentes de datos y agentes de investigación de IA para automatizar workflows de growth.
+
+Flujo:
+
+Clay recibe empresas desde Wellfound, Apollo o listas manuales.
+Clay busca website, LinkedIn, headcount, hiring signals, funding, roles abiertos.
+Apollo encuentra contactos y emails.
+Claude/OpenAI clasifica el lead.
+Clay genera mensaje personalizado.
+HubSpot crea deal/contact/task.
+HubSpot sequence o Apollo sequence envía correo.
+
+Esta sería mi recomendación si quieren algo serio.
+
+Opción avanzada
+
+Custom workflow con Airtable/Retool + Apollo API + OpenAI/Claude + HubSpot API
+
+Esto ya sería construir un mini sistema interno para Melanie.
+
+Tendría un dashboard con columnas:
+
+Company.
+Website.
+Source.
+Hiring signal.
+Open roles.
+Best contact.
+Contact title.
+Email.
+LinkedIn URL.
+Fit score.
+Reason.
+Competitor risk.
+Suggested email.
+Suggested LinkedIn note.
+Status.
+Owner.
+Next action.
+
+Esto es más caro de montar, pero sería el sistema más limpio si quieren escalarlo para más SDRs o recruiters.
+
+7. Cómo debería verse el flujo final
+Flujo automatizado propuesto
+
+1. Lead sourcing
+
+El sistema trae empresas desde Apollo, Wellfound y búsquedas guardadas.
+
+2. Company enrichment
+
+El sistema identifica:
+
+Qué hace la empresa.
+Tamaño.
+Ubicación.
+Industria.
+Si está contratando.
+Qué roles tiene abiertos.
+Si parece startup/scaleup.
+Si compite con Teilur.
+
+3. Contact enrichment
+
+El sistema encuentra:
+
+CEO/founder.
+CTO.
+VP Engineering.
+Head of People.
+COO.
+Email.
+LinkedIn.
+Teléfono, si aplica.
+
+4. AI qualification
+
+La IA clasifica:
+
+Verde: contactar.
+Amarillo: revisar manualmente.
+Rojo: descartar.
+
+Usaría la misma lógica que ya manejas para leads:
+
+Verde: está construyendo equipo, tiene hiring activo, necesita execution capacity y podría estar abierto a nearshore LATAM.
+Amarillo: muy early, poca evidencia de budget, señal débil o contacto no ideal.
+Rojo: competidor, recruiter sin poder, agency, networking sin intención clara o no hay hiring signal.
+
+5. AI personalization
+
+La IA genera:
+
+1 correo personalizado.
+1 connection note de LinkedIn.
+1 follow-up corto.
+1 razón interna de por qué se contacta.
+
+6. Human approval
+
+Melanie revisa solo los verdes y algunos amarillos.
+
+7. Outreach
+
+Email: automatizable con Apollo, HubSpot, Instantly o Smartlead.
+LinkedIn: mejor manual o semi-manual.
+Follow-ups: automatizables.
+
+HubSpot Sequences permite enviar una serie de emails personalizados y programados, además de crear tareas automáticas de seguimiento.
+
+8. Qué NO automatizaría completamente
+No automatizaría connection requests en LinkedIn
+
+Por riesgo de cuenta y porque Teilur necesita verse humano, no spammy. La IA puede preparar la nota, pero Melanie debería enviarla manualmente.
+
+No automatizaría la decisión final del lead
+
+La IA puede decir “verde”, pero Melanie debería revisar antes de enviar a leads de alto valor.
+
+No automatizaría respuestas sensibles
+
+Si alguien responde con interés, objeción o algo estratégico, mejor que Melanie o alguien del equipo responda con apoyo de IA, no completamente automático.
+
+9. Qué sí automatizaría desde ya
+
+Automatizaría estas partes primero porque son las que más tiempo ahorran:
+
+Buscar empresas contratando.
+Detectar si son buen fit o competidor.
+Encontrar decision maker.
+Encontrar email.
+Investigar empresa.
+Generar mensaje personalizado.
+Crear contacto en HubSpot.
+Crear tarea de LinkedIn manual.
+Enviar secuencia de email.
+Marcar respuestas y follow-ups.
+10. Prompt base para calificar leads
+
+Este sería el corazón del sistema:
+
+You are evaluating whether this company is a good outbound lead for Teilur Talent.
+
+Teilur Talent helps US and Canadian companies hire pre-vetted remote tech talent from Latin America. Teilur is not a software agency or managed service provider. The client manages the talent day to day; Teilur handles sourcing, vetting, payroll, contracts, and compliance.
+
+Evaluate the company using these criteria:
+
+1. Is the company based in the US or Canada?
+2. Is the company hiring technical roles?
+3. Are the open roles relevant to software engineering, DevOps, cloud, cybersecurity, data, QA, product, design, or AI?
+4. Is the company likely to benefit from nearshore LATAM hiring?
+5. Is the contact a decision maker or influencer?
+6. Is the company a competitor, staffing agency, outsourcing company, recruiting firm, EOR provider, or software development agency?
+7. Is there enough evidence to justify personalized outreach?
+
+Return:
+- Fit classification: Green, Yellow, or Red
+- Score: 0 to 100
+- Best contact title
+- Why this is a fit
+- Why this may not be a fit
+- Recommended outreach angle
+- Personalized first line
+- Suggested email
+- Suggested LinkedIn connection note
+11. Ejemplo de output que debería recibir Melanie
+
+Para cada lead, Melanie debería ver algo así:
+
+Campo	Ejemplo
+Company	Manifest
+Source	LinkedIn post
+Hiring signal	GTM Engineer role open
+Fit	Green
+Score	82/100
+Best contact	Founder / Head of Growth
+Why fit	Distributed team, hiring technical/GTM hybrid, likely scaling
+Risk	Prefers Midwest talent
+Angle	Remote LATAM GTM/technical talent aligned to US time zones
+Action	Send connection request
+Message	“Saw you’re hiring a GTM Engineer…”
+
+Ese formato le ahorra a Melanie tener que pensar desde cero.
+
+12. Herramientas recomendadas por fase
+Necesidad	Herramienta recomendada
+Encontrar empresas/contactos	Apollo
+Enriquecer data y automatizar investigación	Clay
+CRM y seguimiento	HubSpot
+Redactar mensajes personalizados	Claude / OpenAI
+Email sequences	HubSpot, Apollo, Instantly o Smartlead
+Automatizar pasos entre herramientas	Zapier o Make
+Base de datos interna	Airtable o Google Sheets
+Validar emails	Apollo, NeverBounce, ZeroBounce
+Dashboard interno	Airtable Interfaces, Retool o HubSpot views
+
+Para mí, la mejor combinación sería:
+
+Clay + Apollo + HubSpot + Claude/OpenAI
+
+Y si quieren empezar más simple:
+
+Apollo + Google Sheets + Claude + HubSpot
+
+13. Cuidado legal/compliance en email
+
+Como Teilur contacta empresas de US/Canada, el cold email debe cumplir buenas prácticas. En Estados Unidos, la FTC explica que CAN-SPAM aplica a mensajes comerciales, exige no usar información engañosa, dar opción de opt-out y respetar solicitudes de no recibir más correos.
+
+Si contactan empresas/personas en UK o Europa, también hay que considerar GDPR/UK GDPR cuando se procesa información personal de contactos B2B, incluyendo el derecho a oponerse al marketing directo.
+
+En la práctica:
+
+Usar correos verificados.
+No mentir en subject lines.
+Incluir opt-out.
+No mandar demasiados follow-ups.
+No contactar gente irrelevante.
+Mantener registro de fuente y razón de contacto.
+No usar datos personales sensibles.
+Pausar automáticamente si alguien responde “not interested” o “unsubscribe”.
+14. Mi recomendación concreta
+
+Yo lo implementaría en 3 fases.
+
+Fase 1: MVP operativo
+
+Objetivo: que Melanie deje de investigar desde cero.
+
+Usar:
+
+Apollo.
+Google Sheets.
+Claude/OpenAI.
+HubSpot.
+
+Proceso:
+
+Melanie o Apollo genera lista inicial.
+Se pega en Sheet.
+IA califica cada lead.
+IA genera mensaje.
+Melanie revisa verdes.
+HubSpot guarda seguimiento.
+
+Duración ideal de esta fase: validar calidad antes de automatizar demasiado.
+
+Fase 2: Automatización real
+
+Objetivo: que los leads lleguen ya enriquecidos y rankeados.
+
+Usar:
+
+Clay.
+Apollo.
+HubSpot.
+Claude/OpenAI.
+Zapier/Make.
+
+Proceso:
+
+Clay toma empresas de Apollo/Wellfound/listas.
+Enriquecimiento automático.
+AI scoring.
+Apollo busca contactos.
+IA genera mensajes.
+HubSpot crea contacto/deal/task.
+Email sequence se activa solo para leads aprobados.
+Fase 3: Sistema interno escalable
+
+Objetivo: que Teilur tenga su propio “lead engine”.
+
+Construir:
+
+Dashboard.
+Scoring propio.
+Historial de mensajes.
+Métricas por canal.
+Razones de descarte.
+Automatización por vertical: DevOps, cybersecurity, QA, data, ecommerce, etc.
+
+Métricas importantes:
+
+Leads encontrados por semana.
+% verdes.
+% con email válido.
+Connection acceptance rate.
+Email reply rate.
+Meetings booked.
+Qualified calls.
+Green light job descriptions.
+Closed deals.
+CAC por canal.
+15. Mi conclusión
+
+Sí, el flujo se puede automatizar en un 70%–80%, pero no de la forma de “un bot que hace todo en LinkedIn”. La forma correcta sería:
+
+Automatizar investigación + calificación + enrichment + personalización + CRM + email follow-up.
+
+Y dejar humano:
+
+LinkedIn, aprobación final, respuestas reales y conversaciones estratégicas.
+
+Mi recomendación sería arrancar con un MVP usando Apollo + Google Sheets + Claude/OpenAI + HubSpot, y luego pasar a Clay + Apollo + HubSpot cuando ya tengan claro el scoring y los criterios de Melanie.
+
+yo: Pero entonces, ¿cómo sería? O sea, sería un... ¿Cómo sería la automatización? Digamos, simulando que ya o suponiendo que ya tenemos algo construido, ¿cómo sería, digamos, la automatización por medio de un bot en Slack, en Telegram o por medio de una página? ¿Cómo sería lo mejor? No lo más fácil, no lo más rápido, no lo más difícil, lo mejor.
+
+chatGPT: Lo pensaría como un sistema de prospección con dos caras: una página/dashboard para trabajar los leads y un bot para empujar decisiones rápidas. La mejor solución no sería solo bot ni solo página, sino una combinación.
+
+Pensó durante 9s
+
+La mejor solución sería un sistema web interno como centro principal, conectado a Slack como capa de acción rápida. No lo haría solo en Telegram ni solo en Slack, porque el proceso tiene muchas etapas: investigar, calificar, comparar, aprobar, contactar y hacer seguimiento.
+
+Mi recomendación sería:
+
+La mejor arquitectura: Dashboard web + Slack bot + HubSpot
+
+El dashboard web sería donde vive todo el proceso.
+
+El Slack bot sería para notificar, aprobar, rechazar o pedir ajustes rápido.
+
+HubSpot sería el CRM oficial donde quedan los contactos, compañías, historial y seguimiento. HubSpot tiene APIs para crear y administrar contactos y compañías, así que puede funcionar como la base comercial final.
+
+Slack sirve muy bien para acciones rápidas porque permite mensajes interactivos con botones, menús y campos de texto.
+
+Cómo se vería en la práctica
+
+Imagina que ya está construido.
+
+1. El sistema busca leads automáticamente
+
+Cada mañana, el sistema corre búsquedas en varias fuentes:
+
+Apollo.
+Wellfound.
+LinkedIn, pero de forma semi-manual o con señales permitidas.
+Job boards.
+Sitios de empresas.
+Listas cargadas por Melanie.
+
+El sistema busca señales como:
+
+“We’re hiring”.
+Vacantes de software engineer.
+Vacantes de DevOps.
+Vacantes de data, QA, cybersecurity, AI, product.
+Startups en crecimiento.
+Empresas US/Canada contratando perfiles remotos o técnicos.
+
+Apollo puede servir para prospección, generación de leads y enriquecimiento de contactos.
+Clay también podría servir como capa de enriquecimiento e investigación, porque conecta fuentes de datos y agentes de IA para workflows de growth.
+
+2. La IA hace la primera calificación
+
+Por cada empresa, la IA responde:
+
+¿Qué hace la empresa?
+¿Está contratando?
+¿Qué roles tiene abiertos?
+¿Es US/Canada?
+¿Puede necesitar talento LATAM?
+¿Es startup, scaleup o empresa tech?
+¿Es competidor de Teilur?
+¿Hace recruiting, staffing, outsourcing o nearshore como servicio?
+¿Quién sería la mejor persona para contactar?
+¿El lead es Verde, Amarillo o Rojo?
+
+El sistema no solo diría “sí sirve” o “no sirve”. Diría algo como:
+
+Green — 86/100
+Empresa SaaS de Estados Unidos, contratando 3 engineering roles, equipo de 45 personas, probable necesidad de hiring flexible. Mejor contacto: CEO o CTO. No parece competidor directo.
+
+O:
+
+Red — 22/100
+La empresa también vende staff augmentation/offshore development, por lo que probablemente es competidor o partner no prioritario.
+
+3. El dashboard muestra una bandeja de leads
+
+Melanie entraría a una página interna tipo CRM/operación.
+
+Vería columnas como:
+
+Lead	Score	Estado	Razón	Contacto sugerido	Acción
+Startup A	91	Verde	Hiring 4 engineers	CEO	Aprobar
+Startup B	74	Amarillo	Hiring signal débil	CTO	Revisar
+Agency C	18	Rojo	Competidor	Founder	Descartar
+
+La clave es que Melanie ya no empieza buscando desde cero. Ella empieza desde una lista filtrada.
+
+4. Al abrir un lead, ve todo el análisis
+
+Cada lead tendría una ficha así:
+
+Company: Example AI
+
+Score: 88/100
+Clasificación: Verde
+Fuente: Wellfound
+Hiring signal: Backend Engineer, DevOps Engineer, Product Designer
+Ubicación: US
+Tamaño: 30–80 empleados
+Website: example.com
+LinkedIn: link
+Contacto sugerido: CEO / Founder
+Email encontrado: yes
+Riesgo: bajo
+Razón del fit: están contratando roles técnicos y podrían beneficiarse de talento remoto LATAM.
+Ángulo recomendado: ayudarles a acelerar hiring técnico sin subir costos de payroll US.
+
+Después tendría mensajes generados:
+
+Connection request para LinkedIn.
+Primer mensaje después de aceptar.
+Cold email.
+Follow-up 1.
+Follow-up 2.
+Nota interna para HubSpot.
+5. Melanie aprueba o rechaza
+
+Aquí es donde entra el humano.
+
+Melanie tendría botones:
+
+Approve for email
+Approve for LinkedIn
+Needs edit
+Wrong contact
+Not a fit
+Competitor
+Already contacted
+Send to HubSpot
+
+Esto es importante porque no quieres que la IA contacte sola a cualquier persona. La IA prepara, pero Melanie controla.
+
+El papel del Slack bot
+
+El Slack bot no debería ser el sistema completo. Debería ser el asistente que empuja decisiones.
+
+Por ejemplo, cada mañana el bot manda:
+
+Melanie, encontré 18 leads nuevos.
+7 verdes, 6 amarillos, 5 rojos.
+Los 3 mejores son estos:
+
+Y muestra tarjetas:
+
+Lead 1: Manifest
+Score: 87/100
+Reason: hiring GTM Engineer, distributed team, startup fit.
+Best contact: Founder
+Recommended action: LinkedIn + email
+
+Botones:
+
+Approve
+Reject
+Edit message
+Open full profile
+Send to HubSpot
+
+Slack es muy bueno para esto porque sus mensajes pueden tener botones y componentes interactivos.
+
+Cómo sería una simulación real
+Día normal de Melanie
+8:30 a.m.
+
+Melanie recibe un mensaje en Slack:
+
+New lead batch ready: 24 leads found.
+9 Green, 8 Yellow, 7 Red.
+5 need human review.
+
+Ella hace clic en Review Green Leads.
+
+8:35 a.m.
+
+Se abre el dashboard.
+
+Ve los leads rankeados.
+
+No tiene que revisar 100 perfiles en LinkedIn. Solo revisa los mejores.
+
+8:45 a.m.
+
+Abre un lead.
+
+El sistema ya hizo esto:
+
+Revisó la empresa.
+Detectó vacantes abiertas.
+Identificó si es competidor.
+Buscó contacto.
+Encontró email.
+Generó mensaje.
+Preparó nota para LinkedIn.
+Preparó correo.
+
+Melanie solo decide:
+
+“Sí, este vale la pena.”
+
+8:50 a.m.
+
+Melanie aprueba el lead.
+
+El sistema hace automáticamente:
+
+Crea empresa en HubSpot.
+Crea contacto en HubSpot.
+Guarda fuente.
+Guarda score.
+Guarda razón del fit.
+Crea tarea: “Send LinkedIn connection request”.
+Si email está aprobado, lo manda a una secuencia.
+Si no está aprobado, queda como draft.
+9:00 a.m.
+
+Melanie abre LinkedIn manualmente.
+
+El dashboard le muestra:
+
+Send connection request to Sarah Horn
+Suggested note:
+
+Hey Sarah, saw you’re hiring for a GTM Engineer at Manifest. Loved the way you framed the role around growth, product, and AI. We work with US startups hiring remote LATAM tech talent, so I thought it could be worth connecting.
+
+Ella copia, revisa y envía manualmente.
+
+11:00 a.m.
+
+Alguien responde a un email.
+
+El sistema lo detecta y manda a Slack:
+
+New positive reply from Example AI.
+They asked for more info about LATAM engineering candidates.
+
+Botones:
+
+Draft reply
+Assign to Melanie
+Create meeting task
+Move to qualified
+Open in HubSpot
+Entonces, ¿bot, Slack, Telegram o página?
+
+Mi recomendación:
+
+Mejor opción: Página interna + Slack bot
+
+Porque el dashboard te da estructura, control y visibilidad. Slack te da rapidez.
+
+Telegram no lo escogería como canal principal para una operación comercial de Teilur, a menos que el equipo ya trabaje todo por Telegram. Para una empresa, Slack suele funcionar mejor porque se integra mejor con workflows internos, aprobaciones, notificaciones y herramientas B2B.
+
+Cómo se dividiría cada herramienta
+Dashboard web
+
+Sería para trabajo profundo:
+
+Revisar leads.
+Ver análisis completo.
+Editar mensajes.
+Cambiar score.
+Ver historial.
+Ver pipeline.
+Ver métricas.
+Revisar fuentes.
+Aprobar campañas.
+Ver quién fue contactado.
+Evitar duplicados.
+Slack bot
+
+Sería para decisiones rápidas:
+
+“Hay 10 leads nuevos.”
+“Este lead respondió.”
+“Este contacto parece mejor que el anterior.”
+“Este lead fue marcado como competidor.”
+“¿Apruebas enviar este correo?”
+“¿Quieres moverlo a HubSpot?”
+HubSpot
+
+Sería el sistema final de registro:
+
+Contactos.
+Empresas.
+Deals.
+Tareas.
+Secuencias.
+Estado del lead.
+Historial de comunicación.
+Reportes comerciales.
+El flujo ideal completo
+Lead Sources
+↓
+Apollo / Wellfound / Job Boards / Manual LinkedIn URLs
+↓
+Data Enrichment
+↓
+AI Lead Scoring
+↓
+Duplicate Check
+↓
+Competitor Check
+↓
+Best Contact Finder
+↓
+Message Personalization
+↓
+Dashboard Review
+↓
+Slack Approval
+↓
+HubSpot Creation
+↓
+Email Sequence / Manual LinkedIn Task
+↓
+Reply Detection
+↓
+Human Follow-up
+↓
+Qualified Call / Not Interested / Nurture
+Qué debería automatizar el sistema internamente
+1. Lead discovery
+
+Busca empresas con señales de hiring.
+
+2. Company research
+
+Resume qué hace la empresa.
+
+3. Hiring signal detection
+
+Encuentra roles abiertos y los clasifica.
+
+Ejemplo:
+
+Engineering: fuerte señal.
+Sales: señal media.
+Recruiting role: puede indicar crecimiento, pero no necesariamente necesidad de Teilur.
+No open roles: señal débil.
+4. Competitor detection
+
+Marca rojo si detecta:
+
+Staffing agency.
+Recruiting firm.
+Nearshore agency.
+Outsourcing company.
+Software development agency.
+EOR/payroll provider.
+Talent marketplace.
+5. Contact selection
+
+Escoge la mejor persona.
+
+Prioridad:
+
+Founder / CEO.
+CTO / VP Engineering.
+COO.
+Head of People / Head of Talent.
+Chief of Staff.
+Hiring Manager técnico.
+
+Baja prioridad:
+
+Recruiter.
+Sourcer.
+Talent Acquisition Specialist junior.
+People Coordinator.
+6. Personalization
+
+Genera mensajes con base en:
+
+Vacante abierta.
+Producto de la empresa.
+Etapa de crecimiento.
+Dolor probable.
+Persona a contactar.
+Servicio de Teilur.
+7. CRM sync
+
+Crea o actualiza en HubSpot:
+
+Company.
+Contact.
+Lead score.
+Source.
+Status.
+Owner.
+Last action.
+Next action.
+8. Outreach control
+
+El sistema no debería enviar todo solo.
+
+Mejor:
+
+Emails: puede automatizarse después de aprobación.
+LinkedIn: tarea manual.
+Respuestas: humano con draft de IA.
+Cómo se vería el dashboard ideal
+
+Tendría 6 vistas principales:
+
+1. Lead Inbox
+
+Todos los leads nuevos.
+
+Columnas:
+
+Company.
+Score.
+Fit.
+Source.
+Hiring signal.
+Contact.
+Risk.
+Recommended action.
+2. Green Leads
+
+Solo los mejores.
+
+Estos son los que Melanie revisa primero.
+
+3. Needs Review
+
+Casos dudosos.
+
+Ejemplo:
+
+Buen hiring signal, pero contacto no ideal.
+Buena empresa, pero no se encontró email.
+Empresa interesante, pero podría ser agencia.
+Rol abierto no es técnico.
+4. Competitors / Exclusions
+
+Para que el sistema aprenda.
+
+Cada vez que Melanie marque “competitor”, eso alimenta la regla.
+
+5. Message Review
+
+Bandeja de mensajes generados por IA.
+
+Melanie puede editar, aprobar o pedir regeneración.
+
+6. Performance
+
+Métricas:
+
+Leads encontrados.
+Leads verdes.
+Leads aprobados.
+Emails enviados.
+LinkedIn requests enviadas.
+Respuestas.
+Calls booked.
+Qualified calls.
+Green light job descriptions.
+Closed deals.
+La parte más importante: el sistema debe aprender de Melanie
+
+Esto es clave.
+
+Cada vez que Melanie hace una acción, el sistema aprende:
+
+Si aprueba un lead, entiende qué es buen fit.
+Si lo rechaza por competidor, mejora el filtro.
+Si cambia el contacto sugerido, aprende qué title funciona mejor.
+Si edita el mensaje, aprende el tono.
+Si un tipo de lead responde, sube el peso de esa señal.
+Si un tipo de lead nunca responde, baja prioridad.
+
+No sería solo una automatización. Sería un lead engine entrenado con el criterio comercial de Teilur.
+
+Mi recomendación final
+
+Lo mejor sería construirlo así:
+
+Sistema principal: Web app interna
+
+Nombre posible: Teilur Lead Engine
+
+Funciones:
+
+Buscar leads.
+Enriquecer datos.
+Calificar.
+Detectar competidores.
+Sugerir contactos.
+Generar mensajes.
+Sincronizar con HubSpot.
+Medir performance.
+Capa de acción: Slack bot
+
+Funciones:
+
+Notificar leads nuevos.
+Pedir aprobación.
+Mostrar los mejores leads del día.
+Avisar respuestas.
+Crear tareas rápidas.
+Permitir aprobar/rechazar desde Slack.
+CRM: HubSpot
+
+Funciones:
+
+Guardar la verdad comercial.
+Secuencias.
+Tareas.
+Pipeline.
+Reporting.
+La versión más clara
+
+No haría un bot que “conversa” con Melanie para todo.
+
+Haría esto:
+
+Dashboard para revisar y operar.
+Slack bot para avisar y aprobar.
+HubSpot para guardar y hacer seguimiento.
+IA por detrás para investigar, calificar y redactar.
+
+Ese sería el mejor balance entre automatización, control, calidad y seguridad.

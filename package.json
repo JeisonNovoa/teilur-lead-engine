@@ -1,0 +1,50 @@
+{
+  "name": "teilur-lead-engine",
+  "version": "0.1.0",
+  "description": "Sistema de calificación y prospección de leads para Teilur Talent",
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "qualify": "tsx src/cli/qualify.ts",
+    "search": "tsx src/cli/search.ts",
+    "ingest": "tsx src/cli/ingest.ts",
+    "dashboard": "next dev",
+    "dashboard:build": "next build",
+    "dashboard:start": "next start",
+    "dev": "tsx watch src/cli/qualify.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "leads",
+    "prospecting",
+    "teilur"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@google/genai": "^2.6.0",
+    "better-sqlite3": "^11.7.0",
+    "csv-parse": "^5.5.6",
+    "csv-stringify": "^6.5.0",
+    "dotenv": "^16.4.5",
+    "next": "^15.1.4",
+    "pg": "^8.21.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

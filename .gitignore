@@ -1,0 +1,25 @@
+node_modules/
+dist/
+
+# Variables de entorno (NUNCA subir — contienen claves)
+.env
+.env.local
+.env*.local
+
+# Logs
+*.log
+
+# Datos generados localmente
+data/output/
+data/input/*.csv
+!data/input/.gitkeep
+data/db/
+
+# Next.js
+.next/
+next-env.d.ts
+
+# Sistema
+.DS_Store
+.vercel
+tsconfig.tsbuildinfo

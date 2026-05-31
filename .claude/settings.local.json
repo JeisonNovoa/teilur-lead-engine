@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npm --version)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(npm view *)",
+      "Bash(gh api *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "WebFetch(domain:docs.apollo.io)",
+      "WebFetch(domain:blog.google)",
+      "Bash(curl -s http://localhost:3000 -o /tmp/dashboard-home.html)",
+      "Read(//tmp/**)",
+      "Bash(wait)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('hex'\\)\\)\")"
+    ]
+  }
+}
