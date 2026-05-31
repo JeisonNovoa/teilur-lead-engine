@@ -1,13 +1,13 @@
 import pg from "pg";
 import type { QualifiedLead, LeadInput, Qualification } from "../../types/lead";
-import type {
-  LeadsRepo,
-  LeadRow,
-  LeadState,
-  ListLeadsFilters,
-  LeadStats,
+import {
+  emptyStateCounts,
+  type LeadsRepo,
+  type LeadRow,
+  type LeadState,
+  type ListLeadsFilters,
+  type LeadStats,
 } from "./repo-types";
-import { emptyStateCounts } from "./sqlite-repo";
 
 const { Pool } = pg;
 

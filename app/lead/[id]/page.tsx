@@ -17,7 +17,7 @@ export default async function LeadDetailPage({
   const leadId = parseInt(id, 10);
   if (Number.isNaN(leadId)) notFound();
 
-  const repo = await getRepo();
+  const repo = getRepo();
   const lead = await repo.getLeadById(leadId);
   if (!lead) notFound();
 

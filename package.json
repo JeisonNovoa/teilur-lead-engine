@@ -24,7 +24,6 @@
   "private": true,
   "dependencies": {
     "@google/genai": "^2.6.0",
-    "better-sqlite3": "^11.7.0",
     "csv-parse": "^5.5.6",
     "csv-stringify": "^6.5.0",
     "dotenv": "^16.4.5",
@@ -35,7 +34,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^22.10.0",
     "@types/pg": "^8.20.0",
     "@types/react": "^19.0.4",

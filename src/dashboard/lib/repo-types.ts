@@ -57,10 +57,24 @@ export interface LeadStats {
   byState: Record<LeadState, number>;
 }
 
+/** Helper: objeto con todos los estados en 0 (para inicializar conteos). */
+export function emptyStateCounts(): Record<LeadState, number> {
+  return {
+    pending: 0,
+    approved_email: 0,
+    approved_linkedin: 0,
+    approved_both: 0,
+    rejected: 0,
+    wrong_contact: 0,
+    competitor: 0,
+    already_contacted: 0,
+    needs_edit: 0,
+  };
+}
+
 /**
- * Contrato común que cumplen tanto la implementación SQLite (local) como
- * la de Postgres (Supabase/nube). El resto de la app solo conoce esta interfaz,
- * así que cambiar de motor de DB no afecta a las páginas ni a los CLIs.
+ * Contrato del repositorio de leads (implementado sobre Postgres / Supabase).
+ * El resto de la app solo conoce esta interfaz.
  */
 export interface LeadsRepo {
   upsertLead(lead: QualifiedLead): Promise<number>;

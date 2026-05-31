@@ -22,7 +22,7 @@ export async function POST(
     return NextResponse.json({ error: "ID inválido" }, { status: 400 });
   }
 
-  const repo = await getRepo();
+  const repo = getRepo();
   const lead = await repo.getLeadById(leadId);
   if (!lead) {
     return NextResponse.json({ error: "Lead no encontrado" }, { status: 404 });

@@ -14,7 +14,9 @@
       "Bash(curl -s http://localhost:3000 -o /tmp/dashboard-home.html)",
       "Read(//tmp/**)",
       "Bash(wait)",
-      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('hex'\\)\\)\")"
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('hex'\\)\\)\")",
+      "Bash(git remote *)",
+      "Bash(git push *)"
     ]
   }
 }

@@ -18,7 +18,7 @@ export default async function HomePage({
 }) {
   const params = await searchParams;
 
-  const repo = await getRepo();
+  const repo = getRepo();
   const stats = await repo.getStats();
   const leads = await repo.listLeads({
     fit: (params.fit as "Green" | "Yellow" | "Red" | "all" | undefined) ?? undefined,

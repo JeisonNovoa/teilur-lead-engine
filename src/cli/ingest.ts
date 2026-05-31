@@ -2,7 +2,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { existsSync } from "node:fs";
 import type { QualifiedLead } from "../types/lead.js";
-import { getRepo, activeDbEngine } from "../dashboard/lib/leads-repo.js";
+import { getRepo } from "../dashboard/lib/leads-repo.js";
 
 /**
  * CLI que importa el JSON generado por `search` a la base de datos local
@@ -47,9 +47,9 @@ async function main(): Promise<void> {
   }
 
   console.log(`✅ ${leads.length} lead(s) en el archivo.`);
-  console.log(`🗄️  Base de datos: ${activeDbEngine() === "postgres" ? "Postgres (nube)" : "SQLite (local)"}\n`);
+  console.log(`🗄️  Base de datos: Supabase (Postgres)\n`);
 
-  const repo = await getRepo();
+  const repo = getRepo();
   let imported = 0;
   let updated = 0;
   let errors = 0;
