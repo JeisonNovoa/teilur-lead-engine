@@ -135,6 +135,18 @@ Vercel deploya desde un repo de GitHub.
 
 ---
 
+## ⚠️ Errores comunes del deploy (ya resueltos)
+
+1. **"No Output Directory named public"** → Vercel no detectó Next.js.
+   Solución: el `vercel.json` en la raíz fuerza `"framework": "nextjs"`.
+
+2. **"server-side exception" al cargar leads** → la `DATABASE_URL` usaba el
+   puerto **5432 (conexión directa)**, que NO funciona desde Vercel serverless.
+   Solución: usar la cadena del **Transaction pooler (puerto 6543)** de Supabase
+   (Connect → Transaction pooler). El host es tipo `aws-0-...pooler.supabase.com`.
+
+   > Regla: **local puede usar 5432, pero Vercel SIEMPRE usa el pooler 6543.**
+
 ## Notas importantes
 
 - **Free tier de Supabase:** el proyecto se pausa tras ~1 semana sin uso. La

@@ -78,3 +78,6 @@
 | 2026-05-29 | **Deploy: Vercel + Supabase elegido.** Postgres robusto + auth incluido para crecer. Capa de DB agnóstica: el sistema usa Postgres si hay `DATABASE_URL`, si no SQLite local. CLIs y dashboard comparten la misma DB en la nube. |
 | 2026-05-29 | **Login básico añadido.** Contraseña compartida (`DASHBOARD_PASSWORD`) + cookie de sesión firmada (`AUTH_SECRET`). Middleware protege todo el dashboard. Suficiente para uso interno; migrable a Supabase Auth si se necesita multi-usuario. |
 | 2026-05-29 | **Build de producción verificado.** `npm run build` pasa limpio — confirma que el deploy a Vercel funcionará. Guía paso a paso en `docs/07-DEPLOY.md`. |
+| 2026-05-31 | **Simplificación: solo Supabase.** Se eliminó SQLite por completo (rompía el build de Vercel — `better-sqlite3` es módulo nativo no empaquetable en serverless). El sistema ahora siempre usa Postgres vía `DATABASE_URL`. |
+| 2026-05-31 | **DESPLEGADO en producción.** Dashboard vivo en https://teilur-lead-engine.vercel.app (Vercel + Supabase). Dos fixes clave: `vercel.json` con `framework: nextjs`, y `DATABASE_URL` con pooler puerto 6543 (la conexión directa 5432 no sirve desde Vercel serverless). |
+| 2026-05-31 | **⚠️ Pendiente seguridad:** rotar claves expuestas en chat (Supabase password `Voxceed2026`, Apollo key, Gemini key) antes de uso oficial. |
