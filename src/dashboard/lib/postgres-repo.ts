@@ -205,11 +205,17 @@ export class PostgresLeadsRepo implements LeadsRepo {
     const params: unknown[] = [];
     let p = 1;
 
-    if (!filters.fit || filters.fit === "all") {
-      conditions.push("l.fit_classification IN ('Green','Yellow')");
-    } else {
+    // Filtro de fit:
+    //  - "all"           → todos (incluye Rojos)
+    //  - Green/Yellow/Red → ese color exacto
+    //  - undefined/vacío  → default: solo Verdes y Amarillos (la vista de Melanie)
+    if (filters.fit === "all") {
+      // sin condición: trae los 3 colores
+    } else if (filters.fit === "Green" || filters.fit === "Yellow" || filters.fit === "Red") {
       conditions.push(`l.fit_classification = $${p++}`);
       params.push(filters.fit);
+    } else {
+      conditions.push("l.fit_classification IN ('Green','Yellow')");
     }
 
     if (filters.state && filters.state !== "all") {
@@ -217,9 +223,10 @@ export class PostgresLeadsRepo implements LeadsRepo {
       params.push(filters.state);
     }
 
-    if (filters.search) {
+    const search = filters.search?.trim();
+    if (search) {
       conditions.push(`(l.company_name ILIKE $${p} OR l.contact_name ILIKE $${p})`);
-      params.push(`%${filters.search}%`);
+      params.push(`%${search}%`);
       p++;
     }
 

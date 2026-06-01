@@ -1,39 +1,29 @@
-import type { LeadState } from "../lib/leads-repo";
+import type { LeadState } from "../lib/repo-types";
 
 interface StateBadgeProps {
   state: LeadState;
 }
 
-const stateLabels: Record<LeadState, string> = {
-  pending: "Pendiente",
-  approved_email: "Email aprobado",
-  approved_linkedin: "LinkedIn aprobado",
-  approved_both: "Email + LinkedIn",
-  rejected: "Rechazado",
-  wrong_contact: "Contacto incorrecto",
-  competitor: "Competidor",
-  already_contacted: "Ya contactado",
-  needs_edit: "Necesita edición",
-};
-
-const stateStyles: Record<LeadState, string> = {
-  pending: "bg-zinc-100 text-zinc-700",
-  approved_email: "bg-blue-100 text-blue-800",
-  approved_linkedin: "bg-indigo-100 text-indigo-800",
-  approved_both: "bg-violet-100 text-violet-800",
-  rejected: "bg-zinc-200 text-zinc-700",
-  wrong_contact: "bg-orange-100 text-orange-800",
-  competitor: "bg-red-100 text-red-800",
-  already_contacted: "bg-cyan-100 text-cyan-800",
-  needs_edit: "bg-yellow-100 text-yellow-800",
+const stateConfig: Record<LeadState, { label: string; bg: string; text: string }> = {
+  pending: { label: "Pendiente", bg: "var(--surface-2)", text: "var(--ink-soft)" },
+  approved_email: { label: "Email aprobado", bg: "oklch(0.94 0.04 240)", text: "oklch(0.45 0.13 250)" },
+  approved_linkedin: { label: "LinkedIn aprobado", bg: "oklch(0.94 0.04 265)", text: "oklch(0.45 0.13 270)" },
+  approved_both: { label: "Email + LinkedIn", bg: "oklch(0.94 0.05 290)", text: "oklch(0.45 0.15 295)" },
+  rejected: { label: "Rechazado", bg: "var(--surface-2)", text: "var(--ink-faint)" },
+  wrong_contact: { label: "Contacto incorrecto", bg: "oklch(0.95 0.05 55)", text: "oklch(0.5 0.13 50)" },
+  competitor: { label: "Competidor", bg: "var(--red-bg)", text: "oklch(0.46 0.15 25)" },
+  already_contacted: { label: "Ya contactado", bg: "oklch(0.94 0.05 200)", text: "oklch(0.45 0.1 210)" },
+  needs_edit: { label: "Necesita edición", bg: "var(--amber-bg)", text: "oklch(0.46 0.11 70)" },
 };
 
 export function StateBadge({ state }: StateBadgeProps) {
+  const c = stateConfig[state];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${stateStyles[state]}`}
+      className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium"
+      style={{ background: c.bg, color: c.text }}
     >
-      {stateLabels[state]}
+      {c.label}
     </span>
   );
 }

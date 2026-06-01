@@ -2,26 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Sistema visual — "Editorial sales tool"
+  - Fondo crema tintado (nunca blanco puro)
+  - Verde profundo de marca como acento
+  - Neutros tintados hacia el verde para cohesión subconsciente
+  - Semáforos claros para fit (verde / ámbar / rojo)
+*/
 :root {
-  --background: #fafafa;
-  --foreground: #0a0a0a;
-  --border: #e5e5e5;
-  --card: #ffffff;
-  --muted: #f5f5f5;
-  --muted-foreground: #71717a;
+  /* Neutros tintados (hue verdoso muy sutil) */
+  --bg: oklch(0.985 0.006 140);
+  --surface: oklch(1 0.004 140);
+  --surface-2: oklch(0.975 0.008 140);
+  --border: oklch(0.9 0.01 140);
+  --border-strong: oklch(0.84 0.014 140);
+
+  --ink: oklch(0.27 0.02 150);
+  --ink-soft: oklch(0.46 0.018 150);
+  --ink-faint: oklch(0.62 0.014 150);
+
+  /* Marca: verde profundo (nearshore / talento) */
+  --brand: oklch(0.52 0.11 155);
+  --brand-deep: oklch(0.42 0.1 155);
+  --brand-tint: oklch(0.95 0.03 155);
+
+  /* Semáforos de fit */
+  --green: oklch(0.62 0.13 150);
+  --green-bg: oklch(0.95 0.05 150);
+  --amber: oklch(0.74 0.13 75);
+  --amber-bg: oklch(0.95 0.06 80);
+  --red: oklch(0.6 0.16 25);
+  --red-bg: oklch(0.95 0.04 25);
+
+  --radius: 0.7rem;
+  --shadow-sm: 0 1px 2px oklch(0.4 0.02 150 / 0.05), 0 1px 1px oklch(0.4 0.02 150 / 0.04);
+  --shadow-md: 0 4px 16px oklch(0.4 0.02 150 / 0.08), 0 1px 3px oklch(0.4 0.02 150 / 0.05);
+  --shadow-lg: 0 12px 40px oklch(0.4 0.02 150 / 0.1);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  /* Serif display para títulos */
+  .font-display {
+    font-family: var(--font-display), Georgia, "Times New Roman", serif;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: var(--brand-tint);
+    color: var(--brand-deep);
+  }
+}
+
+@layer components {
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 0.55rem;
+    color: var(--ink);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-tint);
+  }
+
+  /* Reveal escalonado al cargar */
+  .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

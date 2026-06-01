@@ -13,16 +13,13 @@ export function LoginForm() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
-    const response = await fetch("/api/login", {
+    const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
     });
-
     setLoading(false);
-
-    if (response.ok) {
+    if (res.ok) {
       router.push("/");
       router.refresh();
     } else {
@@ -32,25 +29,31 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-zinc-200 rounded-lg p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm text-zinc-700 mb-1">Contraseña</label>
+        <label className="block text-[13px] font-medium text-[var(--ink-soft)] mb-1.5">
+          Contraseña
+        </label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoFocus
-          className="w-full border border-zinc-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-zinc-300 focus:outline-none"
+          className="field w-full px-3.5 py-2.5 text-sm"
           placeholder="••••••••"
         />
       </div>
-      {error && <div className="text-sm text-red-600">{error}</div>}
+      {error && (
+        <div className="text-[13px] text-[oklch(0.5_0.15_25)] bg-[var(--red-bg)] rounded-lg px-3 py-2">
+          {error}
+        </div>
+      )}
       <button
         type="submit"
         disabled={loading || !password}
-        className="w-full bg-zinc-900 text-white text-sm py-2 rounded-md hover:bg-zinc-700 disabled:opacity-50"
+        className="w-full text-sm font-medium py-2.5 rounded-lg text-white bg-[var(--brand)] hover:bg-[var(--brand-deep)] transition-colors disabled:opacity-50"
       >
-        {loading ? "Entrando..." : "Entrar"}
+        {loading ? "Entrando…" : "Entrar"}
       </button>
     </form>
   );

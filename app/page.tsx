@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { getRepo } from "../src/dashboard/lib/leads-repo";
 import { FitBadge } from "../src/dashboard/components/fit-badge";
 import { StateBadge } from "../src/dashboard/components/state-badge";
+import { LeadFilters } from "../src/dashboard/components/lead-filters";
+import type { LeadState } from "../src/dashboard/lib/repo-types";
 
 export const dynamic = "force-dynamic";
 
@@ -18,172 +21,168 @@ export default async function HomePage({
 }) {
   const params = await searchParams;
 
-  const repo = getRepo();
-  const stats = await repo.getStats();
-  const leads = await repo.listLeads({
-    fit: (params.fit as "Green" | "Yellow" | "Red" | "all" | undefined) ?? undefined,
-    state: (params.state as "pending" | "all" | undefined) ?? "pending",
-    search: params.search,
-  });
+  // Normalizar: strings vacíos → undefined (evita romper el query)
+  const fit = params.fit?.trim() || undefined;
+  const state = (params.state?.trim() as LeadState | "all" | undefined) || "pending";
+  const search = params.search?.trim() || undefined;
 
-  const totalPending = stats.byState.pending;
-  const totalGreen = stats.byFit.Green;
-  const totalYellow = stats.byFit.Yellow;
+  const repo = getRepo();
+  const [stats, leads] = await Promise.all([
+    repo.getStats(),
+    repo.listLeads({ fit: fit as "Green" | "Yellow" | "Red" | "all" | undefined, state, search }),
+  ]);
+
+  const pending = stats.byState.pending;
+  const approved =
+    stats.byState.approved_email + stats.byState.approved_linkedin + stats.byState.approved_both;
 
   return (
-    <div className="space-y-6">
-      {/* Hero stats */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Pendientes" value={totalPending} hint="Sin revisar" />
-        <StatCard label="Verdes" value={totalGreen} hint="Listos para contactar" accent="green" />
-        <StatCard label="Amarillos" value={totalYellow} hint="Necesitan revisión" accent="yellow" />
-        <StatCard label="Total leads" value={stats.total} hint="En la base" />
-      </section>
+    <div className="space-y-8">
+      {/* Encabezado editorial + métrica principal */}
+      <header className="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <p className="text-[13px] font-medium text-[var(--brand)] mb-1">Bandeja de leads</p>
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold text-[var(--ink)] leading-none">
+            {pending > 0 ? (
+              <>
+                <span className="text-[var(--brand-deep)]">{pending}</span> por revisar
+              </>
+            ) : (
+              "Todo al día"
+            )}
+          </h1>
+        </div>
+        <div className="flex items-center gap-6 text-sm">
+          <Stat label="Verdes" value={stats.byFit.Green} tone="green" />
+          <Stat label="Amarillos" value={stats.byFit.Yellow} tone="amber" />
+          <Stat label="Aprobados" value={approved} tone="brand" />
+        </div>
+      </header>
 
       {/* Filtros */}
-      <section className="bg-white border border-zinc-200 rounded-lg p-4">
-        <form className="flex flex-wrap gap-3 items-end">
-          <div className="flex-1 min-w-[200px]">
-            <label className="block text-xs text-zinc-600 mb-1">Buscar empresa o contacto</label>
-            <input
-              type="text"
-              name="search"
-              defaultValue={params.search ?? ""}
-              placeholder="Ej: Ethernovia"
-              className="w-full border border-zinc-300 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-zinc-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-xs text-zinc-600 mb-1">Fit</label>
-            <select
-              name="fit"
-              defaultValue={params.fit ?? ""}
-              className="border border-zinc-300 rounded-md px-3 py-1.5 text-sm"
-            >
-              <option value="">Verdes y Amarillos</option>
-              <option value="Green">Solo Verdes</option>
-              <option value="Yellow">Solo Amarillos</option>
-              <option value="Red">Solo Rojos (auditoría)</option>
-              <option value="all">Todos</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs text-zinc-600 mb-1">Estado</label>
-            <select
-              name="state"
-              defaultValue={params.state ?? "pending"}
-              className="border border-zinc-300 rounded-md px-3 py-1.5 text-sm"
-            >
-              <option value="pending">Pendientes</option>
-              <option value="approved_email">Email aprobado</option>
-              <option value="approved_linkedin">LinkedIn aprobado</option>
-              <option value="approved_both">Ambos aprobados</option>
-              <option value="rejected">Rechazados</option>
-              <option value="already_contacted">Ya contactado</option>
-              <option value="all">Todos</option>
-            </select>
-          </div>
-          <button
-            type="submit"
-            className="bg-zinc-900 text-white text-sm px-4 py-1.5 rounded-md hover:bg-zinc-700"
-          >
-            Aplicar
-          </button>
-        </form>
+      <section
+        className="reveal card p-4"
+        style={{ animationDelay: "60ms" }}
+      >
+        <Suspense fallback={<div className="h-12" />}>
+          <LeadFilters />
+        </Suspense>
       </section>
 
-      {/* Lista de leads */}
-      <section className="bg-white border border-zinc-200 rounded-lg overflow-hidden">
+      {/* Lista */}
+      <section className="reveal space-y-2" style={{ animationDelay: "120ms" }}>
         {leads.length === 0 ? (
-          <div className="p-12 text-center text-zinc-500">
-            <p className="text-sm">No hay leads que coincidan con estos filtros.</p>
-            <p className="text-xs mt-2">
-              ¿No hay leads en la base? Corre <code className="bg-zinc-100 px-1 py-0.5 rounded">npm run search</code> y luego <code className="bg-zinc-100 px-1 py-0.5 rounded">npm run ingest</code>.
-            </p>
-          </div>
+          <EmptyState />
         ) : (
-          <table className="w-full text-sm">
-            <thead className="bg-zinc-50 border-b border-zinc-200 text-left text-xs uppercase tracking-wide text-zinc-600">
-              <tr>
-                <th className="px-4 py-3 font-medium">Empresa</th>
-                <th className="px-4 py-3 font-medium">Contacto</th>
-                <th className="px-4 py-3 font-medium">Fit</th>
-                <th className="px-4 py-3 font-medium">Score</th>
-                <th className="px-4 py-3 font-medium">Estado</th>
-                <th className="px-4 py-3 font-medium">Email</th>
-                <th className="px-4 py-3 font-medium"></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-100">
-              {leads.map((lead) => (
-                <tr key={lead.id} className="hover:bg-zinc-50">
-                  <td className="px-4 py-3">
-                    <Link href={`/lead/${lead.id}`} className="font-medium text-zinc-900 hover:underline">
+          <>
+            <div className="flex items-center justify-between px-1 mb-1">
+              <span className="text-[13px] text-[var(--ink-faint)]">
+                {leads.length} {leads.length === 1 ? "lead" : "leads"}
+              </span>
+            </div>
+            {leads.map((lead, i) => (
+              <Link
+                key={lead.id}
+                href={`/lead/${lead.id}`}
+                className="reveal group card flex items-center gap-4 px-4 py-3.5 transition-all hover:shadow-[var(--shadow-md)] hover:border-[var(--border-strong)]"
+                style={{ animationDelay: `${140 + i * 25}ms` }}
+              >
+                {/* Score grande a la izquierda */}
+                <div className="shrink-0 w-12 text-center">
+                  <div className="font-display text-2xl font-semibold tabular-nums text-[var(--ink)] leading-none">
+                    {lead.score}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wide text-[var(--ink-faint)] mt-0.5">
+                    score
+                  </div>
+                </div>
+
+                <div className="w-px self-stretch bg-[var(--border)]" />
+
+                {/* Empresa + contacto */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-semibold text-[var(--ink)] truncate">
                       {lead.companyName}
-                    </Link>
-                    {lead.input.industry && (
-                      <div className="text-xs text-zinc-500">{lead.input.industry}</div>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="text-zinc-900">{lead.contactName ?? "—"}</div>
+                    </span>
+                    <FitBadge fit={lead.fitClassification} size="sm" />
+                  </div>
+                  <div className="text-[13px] text-[var(--ink-soft)] truncate mt-0.5">
+                    {lead.contactName ?? "Sin contacto"}
                     {lead.input.contactTitle && (
-                      <div className="text-xs text-zinc-500">{lead.input.contactTitle}</div>
+                      <span className="text-[var(--ink-faint)]"> · {lead.input.contactTitle}</span>
                     )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <FitBadge fit={lead.fitClassification} />
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="font-medium tabular-nums">{lead.score}</span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <StateBadge state={lead.state} />
-                  </td>
-                  <td className="px-4 py-3">
+                  </div>
+                </div>
+
+                {/* Email + estado */}
+                <div className="hidden md:flex flex-col items-end gap-1.5 shrink-0">
+                  <StateBadge state={lead.state} />
+                  <span className="text-[12px] text-[var(--ink-faint)]">
                     {lead.contactEmail ? (
-                      <span className="text-xs text-zinc-600 font-mono">{lead.contactEmail}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--green)]" />
+                        con email
+                      </span>
                     ) : (
-                      <span className="text-xs text-zinc-400">Sin email</span>
+                      "sin email"
                     )}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <Link
-                      href={`/lead/${lead.id}`}
-                      className="text-xs text-zinc-600 hover:text-zinc-900"
-                    >
-                      Abrir →
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </span>
+                </div>
+
+                <svg
+                  className="shrink-0 h-4 w-4 text-[var(--ink-faint)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--brand)]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </Link>
+            ))}
+          </>
         )}
       </section>
     </div>
   );
 }
 
-interface StatCardProps {
-  label: string;
-  value: number;
-  hint: string;
-  accent?: "green" | "yellow";
+function Stat({ label, value, tone }: { label: string; value: number; tone: "green" | "amber" | "brand" }) {
+  const color =
+    tone === "green" ? "var(--green)" : tone === "amber" ? "var(--amber)" : "var(--brand)";
+  return (
+    <div className="text-right">
+      <div className="font-display text-2xl font-semibold tabular-nums leading-none" style={{ color }}>
+        {value}
+      </div>
+      <div className="text-[11px] uppercase tracking-wide text-[var(--ink-faint)] mt-1">{label}</div>
+    </div>
+  );
 }
 
-function StatCard({ label, value, hint, accent }: StatCardProps) {
-  const accentClass =
-    accent === "green"
-      ? "text-emerald-700"
-      : accent === "yellow"
-        ? "text-amber-700"
-        : "text-zinc-900";
+function EmptyState() {
   return (
-    <div className="bg-white border border-zinc-200 rounded-lg p-4">
-      <div className="text-xs text-zinc-600">{label}</div>
-      <div className={`text-2xl font-semibold mt-1 tabular-nums ${accentClass}`}>{value}</div>
-      <div className="text-xs text-zinc-500 mt-0.5">{hint}</div>
+    <div className="card p-12 text-center">
+      <div className="mx-auto mb-4 grid place-items-center h-12 w-12 rounded-full bg-[var(--brand-tint)]">
+        <svg
+          className="h-6 w-6 text-[var(--brand)]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <path d="m9 11 3 3L22 4" />
+        </svg>
+      </div>
+      <p className="font-display text-lg font-medium text-[var(--ink)]">
+        No hay leads con estos filtros
+      </p>
+      <p className="text-sm text-[var(--ink-soft)] mt-1 max-w-sm mx-auto">
+        Prueba cambiar el filtro de fit o estado. La búsqueda automática trae leads nuevos cada
+        mañana.
+      </p>
     </div>
   );
 }

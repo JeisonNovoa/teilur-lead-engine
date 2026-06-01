@@ -26,180 +26,231 @@ export default async function LeadDetailPage({
 
   return (
     <div className="space-y-6">
-      <div>
-        <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-900">
-          ← Volver a la lista
-        </Link>
-      </div>
+      <Link
+        href="/"
+        className="reveal inline-flex items-center gap-1.5 text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        Volver a la bandeja
+      </Link>
 
-      {/* Header */}
-      <header className="bg-white border border-zinc-200 rounded-lg p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-semibold text-zinc-900">{lead.companyName}</h2>
-            <div className="flex flex-wrap items-center gap-2">
-              <FitBadge fit={lead.fitClassification} />
-              <span className="text-sm font-medium tabular-nums text-zinc-700">
-                Score: {lead.score}/100
-              </span>
-              <StateBadge state={lead.state} />
-              {lead.isCompetitor && (
-                <span className="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded-md font-medium">
-                  Marcado como competidor por la IA
-                </span>
-              )}
-            </div>
+      {/* Encabezado */}
+      <header className="reveal" style={{ animationDelay: "40ms" }}>
+        <div className="flex flex-wrap items-center gap-2.5 mb-2">
+          <FitBadge fit={lead.fitClassification} />
+          <StateBadge state={lead.state} />
+          {lead.isCompetitor && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--red-bg)] px-2.5 py-1 text-xs font-medium text-[oklch(0.46_0.15_25)]">
+              ⚑ Posible competidor
+            </span>
+          )}
+        </div>
+        <div className="flex items-baseline gap-4 flex-wrap">
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold text-[var(--ink)] leading-none">
+            {lead.companyName}
+          </h1>
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-display text-2xl font-semibold text-[var(--brand-deep)] tabular-nums">
+              {lead.score}
+            </span>
+            <span className="text-sm text-[var(--ink-faint)]">/ 100</span>
           </div>
         </div>
       </header>
 
-      {/* Datos de empresa + contacto */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white border border-zinc-200 rounded-lg p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-3">Empresa</h3>
-          <dl className="space-y-2 text-sm">
-            <Field label="Nombre" value={lead.companyName} />
-            <Field label="Website" value={lead.input.website} link={lead.input.website ? prefixUrl(lead.input.website) : undefined} />
+      {/* Grid asimétrico: contenido principal (2fr) + acciones sticky (1fr) */}
+      <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-start">
+        {/* Columna principal */}
+        <div className="space-y-6 min-w-0">
+          {/* Análisis */}
+          <section className="reveal card p-5 space-y-4" style={{ animationDelay: "80ms" }}>
+            <SectionLabel>Por qué este lead</SectionLabel>
+            {q.whyFit && (
+              <Reason tone="green" title="A favor" text={q.whyFit} />
+            )}
+            {q.whyNotFit && <Reason tone="red" title="En contra" text={q.whyNotFit} />}
+            {q.recommendedOutreachAngle && (
+              <Reason tone="brand" title="Ángulo recomendado" text={q.recommendedOutreachAngle} />
+            )}
+          </section>
+
+          {/* Mensajes */}
+          {hasMessages && (
+            <section className="reveal space-y-3" style={{ animationDelay: "120ms" }}>
+              <SectionLabel>Mensajes listos para enviar</SectionLabel>
+              {q.suggestedEmail && (
+                <MessageCard title="Cold email" body={q.suggestedEmail} />
+              )}
+              {q.suggestedLinkedinNote && (
+                <MessageCard title="Nota de LinkedIn" body={q.suggestedLinkedinNote} mono={false} />
+              )}
+              {q.personalizedFirstLine && (
+                <MessageCard title="Primera línea" body={q.personalizedFirstLine} compact />
+              )}
+            </section>
+          )}
+        </div>
+
+        {/* Sidebar: datos + acciones (sticky) */}
+        <aside className="space-y-6 lg:sticky lg:top-24">
+          {/* Acciones */}
+          <section className="reveal card p-5" style={{ animationDelay: "100ms" }}>
+            <SectionLabel>Decisión</SectionLabel>
+            <div className="mt-3">
+              <ActionButtons leadId={lead.id} currentState={lead.state} />
+            </div>
+            {lead.stateNote && (
+              <p className="mt-3 text-xs text-[var(--ink-faint)]">Nota: {lead.stateNote}</p>
+            )}
+          </section>
+
+          {/* Contacto */}
+          <section className="reveal card p-5 space-y-3" style={{ animationDelay: "140ms" }}>
+            <SectionLabel>Contacto</SectionLabel>
+            <Field label="Nombre" value={lead.contactName} />
+            <Field label="Título" value={lead.input.contactTitle} />
+            <Field
+              label="Email"
+              value={lead.contactEmail}
+              href={lead.contactEmail ? `mailto:${lead.contactEmail}` : undefined}
+              copy
+            />
+            <Field
+              label="LinkedIn"
+              value={lead.input.contactLinkedin ? "Ver perfil" : undefined}
+              href={lead.input.contactLinkedin}
+            />
+            <Field label="Mejor contacto (IA)" value={q.bestContactTitle} />
+          </section>
+
+          {/* Empresa */}
+          <section className="reveal card p-5 space-y-3" style={{ animationDelay: "180ms" }}>
+            <SectionLabel>Empresa</SectionLabel>
+            <Field
+              label="Website"
+              value={lead.input.website}
+              href={lead.input.website ? prefixUrl(lead.input.website) : undefined}
+            />
             <Field label="Industria" value={lead.input.industry} />
             <Field label="Empleados" value={lead.input.employeeCount} />
             <Field label="Ubicación" value={lead.input.companyLocation} />
-            <Field label="LinkedIn" value={lead.input.companyLinkedin} link={lead.input.companyLinkedin} />
             {lead.input.companyDescription && (
-              <div className="pt-2">
-                <dt className="text-xs text-zinc-500">Descripción</dt>
-                <dd className="text-sm text-zinc-700 mt-1 leading-relaxed">{lead.input.companyDescription}</dd>
-              </div>
-            )}
-          </dl>
-        </div>
-
-        <div className="bg-white border border-zinc-200 rounded-lg p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-3">Contacto</h3>
-          <dl className="space-y-2 text-sm">
-            <Field label="Nombre" value={lead.contactName} />
-            <Field label="Título" value={lead.input.contactTitle} />
-            <Field label="Email" value={lead.contactEmail} link={lead.contactEmail ? `mailto:${lead.contactEmail}` : undefined} mono />
-            <Field label="LinkedIn" value={lead.input.contactLinkedin} link={lead.input.contactLinkedin} />
-            <div className="pt-2">
-              <dt className="text-xs text-zinc-500">Mejor contacto según IA</dt>
-              <dd className="text-sm text-zinc-700 mt-1">{q.bestContactTitle || "—"}</dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-
-      {/* Análisis IA */}
-      <section className="bg-white border border-zinc-200 rounded-lg p-5">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-3">Análisis</h3>
-        <dl className="space-y-3 text-sm">
-          {q.whyFit && (
-            <div>
-              <dt className="text-xs text-emerald-700 font-medium">Por qué sí</dt>
-              <dd className="text-zinc-700 mt-1 leading-relaxed">{q.whyFit}</dd>
-            </div>
-          )}
-          {q.whyNotFit && (
-            <div>
-              <dt className="text-xs text-red-700 font-medium">Por qué no</dt>
-              <dd className="text-zinc-700 mt-1 leading-relaxed">{q.whyNotFit}</dd>
-            </div>
-          )}
-          {q.recommendedOutreachAngle && (
-            <div>
-              <dt className="text-xs text-blue-700 font-medium">Ángulo recomendado</dt>
-              <dd className="text-zinc-700 mt-1 leading-relaxed">{q.recommendedOutreachAngle}</dd>
-            </div>
-          )}
-        </dl>
-      </section>
-
-      {/* Mensajes generados */}
-      {hasMessages && (
-        <section className="bg-white border border-zinc-200 rounded-lg p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-3">Mensajes generados</h3>
-          <div className="space-y-4">
-            {q.suggestedEmail && (
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-zinc-900">Email sugerido</span>
-                  <CopyButton text={q.suggestedEmail} />
+                <div className="text-[11px] uppercase tracking-wide text-[var(--ink-faint)] mb-1">
+                  Descripción
                 </div>
-                <div className="bg-zinc-50 border border-zinc-200 rounded-md p-3 text-sm text-zinc-700 whitespace-pre-wrap leading-relaxed">
-                  {q.suggestedEmail}
-                </div>
+                <p className="text-[13px] text-[var(--ink-soft)] leading-relaxed">
+                  {lead.input.companyDescription}
+                </p>
               </div>
             )}
-            {q.suggestedLinkedinNote && (
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-zinc-900">Nota LinkedIn</span>
-                  <CopyButton text={q.suggestedLinkedinNote} />
-                </div>
-                <div className="bg-zinc-50 border border-zinc-200 rounded-md p-3 text-sm text-zinc-700 whitespace-pre-wrap leading-relaxed">
-                  {q.suggestedLinkedinNote}
-                </div>
-              </div>
-            )}
-            {q.personalizedFirstLine && (
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-zinc-900">Primera línea personalizada</span>
-                  <CopyButton text={q.personalizedFirstLine} />
-                </div>
-                <div className="bg-zinc-50 border border-zinc-200 rounded-md p-3 text-sm text-zinc-700 leading-relaxed">
-                  {q.personalizedFirstLine}
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+          </section>
 
-      {/* Acciones */}
-      <section className="bg-white border border-zinc-200 rounded-lg p-5">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 mb-3">Acciones</h3>
-        <ActionButtons leadId={lead.id} currentState={lead.state} />
-        {lead.stateNote && (
-          <div className="mt-3 text-xs text-zinc-500">
-            <span className="font-medium">Nota:</span> {lead.stateNote}
-          </div>
-        )}
-      </section>
-
-      {/* Metadata */}
-      <section className="text-xs text-zinc-400 space-y-0.5">
-        <div>Procesado: {new Date(lead.processedAt).toLocaleString("es")}</div>
-        <div>Modelo: {lead.model}</div>
-        <div>Fuente: {lead.source}</div>
-      </section>
+          <p className="text-[11px] text-[var(--ink-faint)] px-1 leading-relaxed">
+            Procesado {new Date(lead.processedAt).toLocaleDateString("es")} · {lead.model} ·{" "}
+            {lead.source}
+          </p>
+        </aside>
+      </div>
     </div>
   );
 }
 
-interface FieldProps {
-  label: string;
-  value?: string | null;
-  link?: string;
-  mono?: boolean;
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="text-[11px] font-semibold uppercase tracking-wider text-[var(--ink-faint)]">
+      {children}
+    </h2>
+  );
 }
 
-function Field({ label, value, link, mono }: FieldProps) {
+function Reason({
+  tone,
+  title,
+  text,
+}: {
+  tone: "green" | "red" | "brand";
+  title: string;
+  text: string;
+}) {
+  const color = tone === "green" ? "var(--green)" : tone === "red" ? "var(--red)" : "var(--brand)";
   return (
-    <div className="flex items-baseline gap-2">
-      <dt className="text-xs text-zinc-500 w-24 shrink-0">{label}</dt>
-      <dd className={`text-zinc-900 ${mono ? "font-mono text-xs" : ""}`}>
+    <div className="flex gap-3">
+      <div className="mt-1.5 h-full w-0.5 rounded-full shrink-0" style={{ background: color }} />
+      <div>
+        <div className="text-[13px] font-medium" style={{ color }}>
+          {title}
+        </div>
+        <p className="text-sm text-[var(--ink-soft)] leading-relaxed mt-0.5">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+function MessageCard({
+  title,
+  body,
+  compact,
+}: {
+  title: string;
+  body: string;
+  mono?: boolean;
+  compact?: boolean;
+}) {
+  return (
+    <div className="card overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border)] bg-[var(--surface-2)]">
+        <span className="text-[13px] font-medium text-[var(--ink)]">{title}</span>
+        <CopyButton text={body} />
+      </div>
+      <p
+        className={`px-4 py-3.5 text-sm text-[var(--ink-soft)] leading-relaxed whitespace-pre-wrap ${
+          compact ? "" : ""
+        }`}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
+function Field({
+  label,
+  value,
+  href,
+  copy,
+}: {
+  label: string;
+  value?: string | null;
+  href?: string;
+  copy?: boolean;
+}) {
+  return (
+    <div className="flex items-baseline justify-between gap-3">
+      <span className="text-[11px] uppercase tracking-wide text-[var(--ink-faint)] shrink-0">
+        {label}
+      </span>
+      <span className="text-[13px] text-[var(--ink)] text-right min-w-0 flex items-center gap-1.5">
         {value ? (
-          link ? (
-            <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+          href ? (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--brand-deep)] hover:underline truncate"
+            >
               {value}
             </a>
           ) : (
-            value
+            <span className="truncate">{value}</span>
           )
         ) : (
-          <span className="text-zinc-400">—</span>
+          <span className="text-[var(--ink-faint)]">—</span>
         )}
-      </dd>
+        {copy && value && <CopyButton text={value} compact />}
+      </span>
     </div>
   );
 }
