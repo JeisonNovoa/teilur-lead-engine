@@ -23,7 +23,10 @@
       "Bash(npx tsx -e ' *)",
       "Bash(node testconn.mjs)",
       "Bash(npx tsx *)",
-      "Bash(git -c user.email=\"jeisonnovoa7@gmail.com\" -c user.name=\"Jeison Novoa\" commit -m \"docs: registrar rediseño y arreglo de filtros\")"
+      "Bash(git -c user.email=\"jeisonnovoa7@gmail.com\" -c user.name=\"Jeison Novoa\" commit -m \"docs: registrar rediseño y arreglo de filtros\")",
+      "Bash(curl -s -o /dev/null -w \"Producción /login: HTTP %{http_code}\\\\n\" https://teilur-lead-engine.vercel.app/login)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git -c user.email=jeisonnovoa7@gmail.com -c 'user.name=Jeison Novoa' commit -m 'Arreglar enriquecimiento: aprovechar person.organization de Apollo *)"
     ]
   }
 }

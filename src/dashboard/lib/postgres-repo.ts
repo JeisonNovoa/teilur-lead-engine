@@ -198,6 +198,22 @@ export class PostgresLeadsRepo implements LeadsRepo {
     return leadId;
   }
 
+  async updateLeadData(leadId: number, lead: QualifiedLead): Promise<void> {
+    await ensureSchema();
+    const pool = getPool();
+    await pool.query(
+      `UPDATE leads SET
+         contact_email = $1, input_json = $2, qualification_json = $3
+       WHERE id = $4`,
+      [
+        lead.input.contactEmail ?? null,
+        JSON.stringify(lead.input),
+        JSON.stringify(lead.qualification),
+        leadId,
+      ],
+    );
+  }
+
   async listLeads(filters: ListLeadsFilters = {}): Promise<LeadRow[]> {
     await ensureSchema();
     const pool = getPool();

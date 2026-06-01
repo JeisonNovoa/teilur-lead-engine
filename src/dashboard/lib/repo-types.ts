@@ -82,4 +82,9 @@ export interface LeadsRepo {
   getLeadById(id: number): Promise<LeadRow | null>;
   updateLeadState(leadId: number, newState: LeadState, note?: string): Promise<void>;
   getStats(): Promise<LeadStats>;
+  /**
+   * Actualiza los datos enriquecidos de un lead (input + qualification) sin
+   * tocar su estado. Se usa al re-enriquecer leads existentes.
+   */
+  updateLeadData(leadId: number, lead: QualifiedLead): Promise<void>;
 }

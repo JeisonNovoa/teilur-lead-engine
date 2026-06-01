@@ -8,6 +8,7 @@
     "qualify": "tsx src/cli/qualify.ts",
     "search": "tsx src/cli/search.ts",
     "ingest": "tsx src/cli/ingest.ts",
+    "reenrich": "tsx src/cli/reenrich.ts",
     "dashboard": "next dev",
     "dashboard:build": "next build",
     "dashboard:start": "next start",

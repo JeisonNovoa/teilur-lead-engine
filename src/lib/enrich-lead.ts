@@ -28,19 +28,41 @@ export async function enrichLead(
   let callsMade = 0;
   const errors: string[] = [];
 
-  // --- 1. Enriquecer persona (sacar email + LinkedIn) ---
-  const needsPersonEnrich = !lead.contactEmail || !lead.contactLinkedin;
+  // --- 1. Enriquecer persona (sacar email + LinkedIn + datos de empresa) ---
+  // people/match devuelve TAMBIÉN la organización completa (website, industria,
+  // tamaño, descripción...) en person.organization — sin costo extra. La
+  // aprovechamos aquí para no depender del endpoint de organización.
+  const needsPersonEnrich =
+    !lead.contactEmail ||
+    !lead.contactLinkedin ||
+    !lead.website ||
+    !lead.industry ||
+    !lead.employeeCount ||
+    !lead.companyDescription;
   const personId = lead.raw?.apollo_person_id;
   if (needsPersonEnrich && personId) {
     try {
       const person = await apollo.enrichPerson({ id: personId });
       callsMade += 1;
       if (person) {
+        const org = person.organization;
+        const orgLocation = org
+          ? [org.city, org.state, org.country].filter(Boolean).join(", ") || undefined
+          : undefined;
         enriched = {
           ...enriched,
           contactEmail: enriched.contactEmail || person.email || undefined,
           contactLinkedin: enriched.contactLinkedin || person.linkedin_url || undefined,
           contactTitle: enriched.contactTitle || person.title || undefined,
+          // Datos de empresa que vienen en la misma respuesta
+          website: enriched.website || org?.website_url || org?.primary_domain || undefined,
+          industry: enriched.industry || org?.industry || undefined,
+          employeeCount:
+            enriched.employeeCount ||
+            (org?.estimated_num_employees ? String(org.estimated_num_employees) : undefined),
+          companyLocation: enriched.companyLocation || orgLocation,
+          companyLinkedin: enriched.companyLinkedin || org?.linkedin_url || undefined,
+          companyDescription: enriched.companyDescription || org?.short_description || undefined,
         };
       }
     } catch (err) {
