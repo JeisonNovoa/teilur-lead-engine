@@ -98,6 +98,10 @@ export default async function LeadDetailPage({
           {/* Acciones */}
           <section className="reveal card p-5" style={{ animationDelay: "100ms" }}>
             <SectionLabel>Decisión</SectionLabel>
+            <p className="text-xs text-[var(--ink-faint)] mt-1.5 leading-relaxed">
+              Marca cómo vas a contactar este lead. No envía nada — copia el mensaje
+              de abajo y mándalo tú.
+            </p>
             <div className="mt-3">
               <ActionButtons leadId={lead.id} currentState={lead.state} />
             </div>

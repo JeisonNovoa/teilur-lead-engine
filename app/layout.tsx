@@ -49,14 +49,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     </span>
                   </span>
                 </a>
-                <form action="/api/logout" method="post">
-                  <button
-                    type="submit"
+                <div className="flex items-center gap-1">
+                  <a
+                    href="/ayuda"
                     className="text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors px-3 py-1.5 rounded-lg hover:bg-[var(--surface-2)]"
                   >
-                    Salir
-                  </button>
-                </form>
+                    Ayuda
+                  </a>
+                  <form action="/api/logout" method="post">
+                    <button
+                      type="submit"
+                      className="text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors px-3 py-1.5 rounded-lg hover:bg-[var(--surface-2)]"
+                    >
+                      Salir
+                    </button>
+                  </form>
+                </div>
               </div>
             </header>
             <main className="mx-auto max-w-6xl px-6 py-8 md:py-10">{children}</main>
