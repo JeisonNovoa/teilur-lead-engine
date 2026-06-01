@@ -1,0 +1,48 @@
+name: Búsqueda diaria de leads
+
+# Corre automáticamente cada mañana y trae leads nuevos a Supabase.
+# También se puede disparar manualmente desde la pestaña "Actions" de GitHub.
+
+on:
+  schedule:
+    # 12:00 UTC = 7:00 AM Colombia (UTC-5). Ajusta si cambia la zona horaria.
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+    # Permite correrlo a mano con un botón, y elegir cuántos leads buscar.
+    inputs:
+      max_results:
+        description: "Cuántos leads buscar"
+        required: false
+        default: "15"
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Buscar y calificar leads → Supabase
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          APOLLO_API_KEY: ${{ secrets.APOLLO_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CONCURRENCY: "3"
+          BATCH_DELAY_MS: "1500"
+        run: |
+          MAX="${{ github.event.inputs.max_results }}"
+          MAX="${MAX:-15}"
+          echo "Buscando $MAX leads..."
+          npm run search -- "$MAX" --to-db

@@ -15,6 +15,8 @@ const DEFAULT_MAX_RESULTS = 25;
  *   npm run search              → busca 25 leads (default)
  *   npm run search -- 50        → busca 50 leads
  *   npm run search -- 20 --no-enrich  → busca y califica sin enriquecer (sin gastar créditos)
+ *   npm run search -- 30 --to-db      → escribe directo a la base de datos (Supabase)
+ *                                        en vez de a CSV. Usado por el cron diario.
  *
  * Por defecto usa el pipeline de DOBLE PASADA:
  *   1) Pre-califica todos los leads con la data básica de la búsqueda (gratis)
@@ -23,7 +25,7 @@ const DEFAULT_MAX_RESULTS = 25;
  * Los Rojos se descartan sin gastar créditos.
  */
 async function main(): Promise<void> {
-  const { maxResults, enrich } = parseArgs(process.argv.slice(2));
+  const { maxResults, enrich, toDb } = parseArgs(process.argv.slice(2));
   const config = loadConfig({ requireApollo: true });
 
   console.log(`🔎 Buscando hasta ${maxResults} leads en Apollo con los filtros de Teilur...`);
@@ -70,29 +72,50 @@ async function main(): Promise<void> {
     creditsUsed = pipeline.totalEnrichmentCalls;
   }
 
-  const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
-  const outBase = `data/output/apollo-search-${stamp}`;
-  const { jsonPath, csvPath, auditJsonPath, auditCsvPath } = await writeResults(results, outBase);
-
   printSummary(results, creditsUsed);
-  console.log("\n📄 PARA MELANIE (solo Verdes y Amarillos):");
-  console.log(`   CSV:  ${csvPath}`);
-  console.log(`   JSON: ${jsonPath}`);
-  console.log("\n🔍 AUDITORÍA (incluye Rojos descartados):");
-  console.log(`   CSV:  ${auditCsvPath}`);
-  console.log(`   JSON: ${auditJsonPath}`);
+
+  if (toDb) {
+    // Modo cron: escribe directo a la base de datos (Supabase).
+    const { getRepo } = await import("../dashboard/lib/leads-repo.js");
+    const repo = getRepo();
+    let saved = 0;
+    for (const lead of results) {
+      try {
+        await repo.upsertLead(lead);
+        saved += 1;
+      } catch (err) {
+        console.error(
+          `  ⚠️  No se pudo guardar ${lead.input.companyName}: ${err instanceof Error ? err.message : err}`,
+        );
+      }
+    }
+    console.log(`\n💾 Guardados ${saved}/${results.length} leads en la base de datos (Supabase).`);
+  } else {
+    // Modo normal: escribe a CSV/JSON local.
+    const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+    const outBase = `data/output/apollo-search-${stamp}`;
+    const { jsonPath, csvPath, auditJsonPath, auditCsvPath } = await writeResults(results, outBase);
+    console.log("\n📄 PARA MELANIE (solo Verdes y Amarillos):");
+    console.log(`   CSV:  ${csvPath}`);
+    console.log(`   JSON: ${jsonPath}`);
+    console.log("\n🔍 AUDITORÍA (incluye Rojos descartados):");
+    console.log(`   CSV:  ${auditCsvPath}`);
+    console.log(`   JSON: ${auditJsonPath}`);
+  }
 }
 
-function parseArgs(args: string[]): { maxResults: number; enrich: boolean } {
+function parseArgs(args: string[]): { maxResults: number; enrich: boolean; toDb: boolean } {
   let maxResults = DEFAULT_MAX_RESULTS;
   let enrich = true;
+  let toDb = false;
   for (const arg of args) {
     if (arg === "--no-enrich") enrich = false;
+    else if (arg === "--to-db") toDb = true;
     else if (/^\d+$/.test(arg)) maxResults = Math.min(500, parseInt(arg, 10));
     else if (arg.startsWith("--")) console.warn(`⚠️  Flag desconocida: ${arg}`);
     else if (arg.trim()) console.warn(`⚠️  Argumento desconocido: ${arg}`);
   }
-  return { maxResults, enrich };
+  return { maxResults, enrich, toDb };
 }
 
 function iconFor(fit: string): string {
